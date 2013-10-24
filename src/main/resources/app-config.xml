@@ -4,27 +4,29 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
 
     <camel:errorHandler id="myErrorHandler" type="DefaultErrorHandler">
-        <!--<camel:redeliveryPolicy maximumRedeliveries="2"-->
-                                <!--logRetryAttempted="true" logExhausted="true" redeliveryDelay="0"-->
-                                <!--logStackTrace="true"/>-->
+        <camel:redeliveryPolicy maximumRedeliveries="2"
+                                logRetryAttempted="true" logExhausted="true" redeliveryDelay="0"
+                                logStackTrace="true"/>
     </camel:errorHandler>
 
     <camel:camelContext id="myCamelContext" errorHandlerRef="myErrorHandler">
 
+        <!-- global exception handling -->
+        <camel:onException>
+            <camel:exception>java.lang.Exception</camel:exception>
+            <camel:process ref="defaultFailureProcessor"/>
+        </camel:onException>
+
         <camel:route id="foo">
             <camel:from uri="direct:start"/>
-            <camel:process ref="myProcessor"/>
+            <camel:process ref="failedProcessor"/>
             <camel:to uri="mock:result"/>
-            <camel:onException>
-                <camel:exception>java.lang.Exception</camel:exception>
-                <camel:process ref="defaultFailureProcessor"/>
-            </camel:onException>
         </camel:route>
 
     </camel:camelContext>
 
     <!-- processor -->
-    <bean id="myProcessor" class="com.backbase.progfun.camel.processors.MyProcessor"/>
+    <bean id="failedProcessor" class="com.backbase.progfun.camel.processors.FailedProcessor"/>
 
     <bean id="defaultFailureProcessor" class="com.backbase.progfun.camel.processors.DefaultFailureProcessor"/>
 

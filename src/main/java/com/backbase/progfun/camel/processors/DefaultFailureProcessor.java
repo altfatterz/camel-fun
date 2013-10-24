@@ -10,6 +10,8 @@ import org.json.simple.JSONObject;
 
 public class DefaultFailureProcessor implements Processor {
 
+    public static final String STATUS_CODE = "statusCode";
+
     @Override
     public void process(Exchange exchange) throws Exception {
 
@@ -21,7 +23,7 @@ public class DefaultFailureProcessor implements Processor {
         result.put("error", errorDetails);
 
         final Message out = exchange.getOut();
-        out.setHeader("statusCode", 500);
+        out.setHeader(STATUS_CODE, 500);
         out.setBody(result);
     }
 

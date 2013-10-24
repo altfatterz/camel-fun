@@ -12,21 +12,10 @@ import org.apache.camel.Processor;
  * To change this template use File | Settings | File Templates.
  */
 
-public class MyProcessor implements Processor {
+public class FailedProcessor implements Processor {
 
     @Override
     public void process(Exchange exchange) throws Exception {
-
-        final Message in = exchange.getIn();
-
-        final Object body = in.getBody();
-        System.out.println("Body:" + body);
-
-        final String fromRouteId = exchange.getFromRouteId();
-        System.out.println("FromRouteId:" + fromRouteId);
-
         throw new Exception("error occurred");
-
-        //To change body of implemented methods use File | Settings | File Templates.
     }
 }
