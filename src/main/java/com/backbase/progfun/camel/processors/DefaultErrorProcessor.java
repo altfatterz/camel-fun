@@ -8,7 +8,10 @@ import org.apache.camel.Message;
 import org.apache.camel.Processor;
 import org.json.simple.JSONObject;
 
-public class DefaultFailureProcessor implements Processor {
+/**
+ *
+ */
+public class DefaultErrorProcessor implements Processor {
 
     public static final String STATUS_CODE = "statusCode";
 

@@ -14,20 +14,21 @@
         <!-- global exception handling -->
         <camel:onException>
             <camel:exception>java.lang.Exception</camel:exception>
-            <camel:process ref="defaultFailureProcessor"/>
+            <camel:process ref="defaultErrorProcessor"/>
         </camel:onException>
 
         <camel:route id="foo">
             <camel:from uri="direct:start"/>
-            <camel:process ref="failedProcessor"/>
+            <camel:process ref="myProcessor"/>
             <camel:to uri="mock:result"/>
         </camel:route>
 
     </camel:camelContext>
 
     <!-- processor -->
-    <bean id="failedProcessor" class="com.backbase.progfun.camel.processors.FailedProcessor"/>
+    <bean id="myProcessor" class="com.backbase.progfun.camel.processors.MyProcessor"/>
 
-    <bean id="defaultFailureProcessor" class="com.backbase.progfun.camel.processors.DefaultFailureProcessor"/>
+    <!-- default failure processor -->
+    <bean id="defaultErrorProcessor" class="com.backbase.progfun.camel.processors.DefaultErrorProcessor"/>
 
 </beans>
